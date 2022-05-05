@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val url = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
 
+
+    
+
     private val gson: Gson by lazy { GsonBuilder().create() }
 
     private val okHttp: OkHttpClient by lazy {
