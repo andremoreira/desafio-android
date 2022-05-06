@@ -1,11 +1,14 @@
-package com.picpay.desafio.android
+package com.picpay.desafio.android.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.data.models.User
+import com.picpay.desafio.android.ui.adapter.viewHolder.UserItemViewHolder
 
-class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<UserItemViewHolder>() {
 
     var users = emptyList<User>()
         set(value) {
@@ -19,16 +22,16 @@ class UserListAdapter : RecyclerView.Adapter<UserListItemViewHolder>() {
             field = value
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_user, parent, false)
 
-        return UserListItemViewHolder(view)
+        return UserItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: UserListItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserItemViewHolder, position: Int) {
         holder.bind(users[position])
     }
 
-    override fun getItemCount(): Int = users.size
+    override fun getItemCount(): Int = users.count()
 }
