@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
-import com.picpay.desafio.android.network.users.RetrofitConfig
+import com.picpay.desafio.android.network.RetrofitConfig
 import com.picpay.desafio.android.network.users.models.User
 import com.picpay.desafio.android.ui.adapter.UserAdapter
 import com.picpay.desafio.android.utis.Utils
@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        userViewModel.listUser.listen(this, ::sucessUser)
-        userViewModel.errorUser.listen(this, ::errorUser)
+        userViewModel._listUser.listen(this, ::sucessUser)
+        userViewModel._errorUser.listen(this, ::errorUser)
         user_list_progress_bar?.visibility = View.VISIBLE
     }
 

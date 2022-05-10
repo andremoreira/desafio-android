@@ -1,8 +1,10 @@
 package com.picpay.desafio.android.network.users
 
+import com.picpay.desafio.android.network.RetrofitConfig
 import com.picpay.desafio.android.network.users.api.PicPayService
 import com.picpay.desafio.android.network.users.models.User
 import com.picpay.desafio.android.utis.CustomResult
+import io.reactivex.Single
 
 class RepositoryUser : IRepositoryUser {
 

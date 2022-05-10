@@ -1,11 +1,8 @@
-package com.picpay.desafio.android.network.users
+package com.picpay.desafio.android.network
 
 import android.content.Context
-import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.R
-import com.picpay.desafio.android.application.App
 import com.picpay.desafio.android.utis.GlobalConstants.Companion.BASE_API
 import com.picpay.desafio.android.utis.Utils
 import okhttp3.Cache
