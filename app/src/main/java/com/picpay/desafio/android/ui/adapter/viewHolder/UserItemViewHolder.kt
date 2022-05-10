@@ -13,18 +13,11 @@ class UserItemViewHolder(
 ) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(user: User) {
-        itemView.name.text = user.name?: ""
-        itemView.username.text = user.username?: ""
+        itemView.name.text = user.name ?: ""
+        itemView.username.text = user.username ?: ""
         Picasso.get()
-            .load(user.img?: "")
+            .load(user.img ?: "")
             .error(R.drawable.ic_round_account_circle)
-            .into(itemView.picture, object : Callback {
-                override fun onSuccess() {
-         //           itemView.progressBar.visibility = View.GONE
-                }
-                override fun onError(e: Exception?) {
-          //          itemView.progressBar.visibility = View.GONE
-                }
-            })
+            .into(itemView.picture)
     }
 }

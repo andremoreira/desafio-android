@@ -10,15 +10,8 @@ import org.koin.core.context.startKoin
 
 open class App : Application() {
 
-    companion object {
-        lateinit var instance: App
-        lateinit var context: Context
-    }
-
     override fun onCreate() {
         super.onCreate()
-        instance = this
-        context = applicationContext
         initKoin()
     }
 

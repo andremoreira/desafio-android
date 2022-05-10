@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.network.users.RetrofitConfig
 import com.picpay.desafio.android.network.users.models.User
 import com.picpay.desafio.android.ui.adapter.UserAdapter
+import com.picpay.desafio.android.utis.Utils
 import com.picpay.desafio.android.utis.listen
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +27,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        RetrofitConfig.setContext(this@MainActivity)
+        if (!Utils.isInternetAvailable(this@MainActivity)) {
+            user_list_progress_bar?.visibility = View.GONE
+            Toast.makeText(this@MainActivity, R.string.message_internet, Toast.LENGTH_SHORT).show()
+        }
         userViewModel.getUsers()
         initObservers()
         setupRecyclerView()
@@ -42,8 +49,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun errorUser(error: String) {
-        user_list_progress_bar?.visibility = View.GONE
         Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
+        user_list_progress_bar?.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {

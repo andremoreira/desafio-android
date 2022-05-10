@@ -12,7 +12,6 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, CoroutineScope {
     override val coroutineContext = Dispatchers.Main
 
     protected val jobs = ArrayList<Job>()
-    protected val compositeDisposable by lazy { CompositeDisposable() }
 
     infix fun ArrayList<Job>.add(job: Job){
         this.add(job)

@@ -2,6 +2,6 @@ package com.picpay.desafio.android.utis
 
 class GlobalConstants {
     companion object{
-        val BASE_API = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
+        const val BASE_API = "https://609a908e0f5a13001721b74e.mockapi.io/picpay/api/"
     }
 }

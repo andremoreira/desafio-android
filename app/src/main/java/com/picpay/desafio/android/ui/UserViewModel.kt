@@ -1,5 +1,6 @@
 package com.picpay.desafio.android.ui
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.picpay.desafio.android.network.users.IRepositoryUser
 import com.picpay.desafio.android.network.users.models.User
@@ -22,4 +23,5 @@ class UserViewModel(private val _repositoryUser: IRepositoryUser) : BaseViewMode
             })
         }
     }
+
 }

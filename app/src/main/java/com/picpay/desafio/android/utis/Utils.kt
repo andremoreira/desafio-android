@@ -7,10 +7,10 @@ import android.net.NetworkInfo
 class Utils {
 
     companion object {
-        fun isInternetAvailable(context: Context): Boolean {
+        fun isInternetAvailable(context: Context?): Boolean {
             var isConnected = false
             val connectivityManager =
-                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
             if (activeNetwork != null && activeNetwork.isConnected)
                 isConnected = true
