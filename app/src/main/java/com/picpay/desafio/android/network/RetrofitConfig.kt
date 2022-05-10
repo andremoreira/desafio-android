@@ -3,7 +3,8 @@ package com.picpay.desafio.android.network
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.picpay.desafio.android.utis.GlobalConstants.Companion.BASE_API
+import com.picpay.desafio.android.R
+import com.picpay.desafio.android.utis.BaseApis.Companion.BASE_API
 import com.picpay.desafio.android.utis.Utils
 import okhttp3.Cache
 import okhttp3.OkHttpClient

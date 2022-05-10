@@ -1,12 +1,13 @@
 package com.picpay.desafio.android.ui
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.picpay.desafio.android.R
+import com.picpay.desafio.android.helper.hideView
+import com.picpay.desafio.android.helper.showView
 import com.picpay.desafio.android.network.RetrofitConfig
 import com.picpay.desafio.android.network.users.models.User
 import com.picpay.desafio.android.ui.adapter.UserAdapter
@@ -29,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         RetrofitConfig.setContext(this@MainActivity)
         if (!Utils.isInternetAvailable(this@MainActivity)) {
-            user_list_progress_bar?.visibility = View.GONE
-            Toast.makeText(this@MainActivity, R.string.message_internet, Toast.LENGTH_SHORT).show()
+            snackBar(getString(R.string.message_internet), false)
         }
         userViewModel.getUsers()
         initObservers()
@@ -40,17 +40,32 @@ class MainActivity : AppCompatActivity() {
     private fun initObservers() {
         userViewModel._listUser.listen(this, ::sucessUser)
         userViewModel._errorUser.listen(this, ::errorUser)
-        user_list_progress_bar?.visibility = View.VISIBLE
+        user_list_progress_bar.showView()
     }
 
     private fun sucessUser(user: List<User>) {
         userAdapter.users = user
-        user_list_progress_bar?.visibility = View.GONE
+        user_list_progress_bar.hideView()
     }
 
     private fun errorUser(error: String) {
-        Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
-        user_list_progress_bar?.visibility = View.GONE
+        snackBar(getString(R.string.message_erro), true)
+    }
+
+    private fun snackBar(message: String, action: Boolean) {
+        when {
+            action -> {
+                Snackbar.make(user_list_recycler, message, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(getString(R.string.try_again)) {
+                        userViewModel.getUsers()
+                    }
+            }
+            else -> {
+                Snackbar.make(user_list_recycler, message, Snackbar.LENGTH_LONG)
+            }
+        }.show()
+
+        user_list_progress_bar.hideView()
     }
 
     private fun setupRecyclerView() {

@@ -3,4 +3,6 @@
     <string name="title">Contatos</string>
     <string name="error">Ocorreu um erro. Tente novamente.</string>
     <string name="message_internet">Sem conexão com a internet.</string>
+    <string name="message_erro">Houve um erro!</string>
+    <string name="try_again">Tente Novamente</string>
 </resources>
