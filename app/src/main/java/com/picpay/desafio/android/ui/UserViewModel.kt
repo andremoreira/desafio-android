@@ -10,13 +10,13 @@ import kotlinx.coroutines.async
 
 class UserViewModel(private val _repositoryUser: IRepositoryUser) : BaseViewModel() {
 
-    var _listUser: MutableLiveData<List<User>> = MutableLiveData()
-    var _errorUser: MutableLiveData<String> = MutableLiveData()
+    var listUser: MutableLiveData<List<User>> = MutableLiveData()
+    var errorUser: MutableLiveData<String> = MutableLiveData()
 
     fun getUsers() {
         jobs add async {
-            _repositoryUser.getUsers().andThen(_errorUser::postValue) {
-                _listUser.postValue(it)
+            _repositoryUser.getUsers().andThen(errorUser::postValue) {
+                listUser.postValue(it)
             }
         }
     }

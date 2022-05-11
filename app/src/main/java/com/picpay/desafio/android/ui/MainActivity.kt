@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        userViewModel._listUser.listen(this, ::sucessUser)
-        userViewModel._errorUser.listen(this, ::errorUser)
+        userViewModel.listUser.listen(this, ::sucessUser)
+        userViewModel.errorUser.listen(this, ::errorUser)
         user_list_progress_bar.showView()
     }
 
