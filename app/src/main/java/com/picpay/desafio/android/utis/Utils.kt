@@ -3,11 +3,7 @@ package com.picpay.desafio.android.utis
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.service.autofill.OnClickAction
-import android.view.View
-import com.google.android.material.snackbar.Snackbar
-import com.picpay.desafio.android.R
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class Utils {
 

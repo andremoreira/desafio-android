@@ -1,69 +1,64 @@
 package com.picpay.desafio.android
 
-import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.launchActivity
+import android.content.Context
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.ui.MainActivity
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
-
+@RunWith(AndroidJUnit4::class)
+@SmallTest
 class MainActivityTest {
 
-    private val server = MockWebServer()
-
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-    @Test
-    fun shouldDisplayTitle() {
-        launchActivity<MainActivity>().apply {
-            val expectedTitle = context.getString(R.string.title)
-
-            moveToState(Lifecycle.State.RESUMED)
-
-            onView(withText(expectedTitle)).check(matches(isDisplayed()))
-        }
-    }
-
-    @Test
-    fun shouldDisplayListItem() {
-        server.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                return when (request.path) {
-                    "/users" -> successResponse
-                    else -> errorResponse
-                }
-            }
-        }
-
-        server.start(serverPort)
-
-        launchActivity<MainActivity>().apply {
-            // TODO("validate if list displays items returned by server")
-        }
-
-        server.close()
-    }
-
     companion object {
-        private const val serverPort = 8080
+        private const val TIME = 5000L
+    }
 
-        private val successResponse by lazy {
-            val body =
-                "[{\"id\":1001,\"name\":\"Eduardo Santos\",\"img\":\"https://randomuser.me/api/portraits/men/9.jpg\",\"username\":\"@eduardo.santos\"}]"
+    @get:Rule
+    var activityRule = activityScenarioRule<MainActivity>()
 
-            MockResponse()
-                .setResponseCode(200)
-                .setBody(body)
+    private var context: Context? = null
+    private var title: String? = ""
+
+    @Before
+    fun setUp() {
+        context = InstrumentationRegistry.getInstrumentation().targetContext
+        title = context?.resources?.getString(R.string.title).toString()
+    }
+
+    @Test
+    fun shouldReturnTitleContacts() {
+        onView(withText(title)).check(matches(isCompletelyDisplayed()))
+    }
+
+    @Test
+    fun shouldReturnListContacts() {
+        onView(withText(title)).check(matches(isCompletelyDisplayed()))
+        onView(withId(R.id.user_list_recycler)).let {
+            it.check(matches(isEnabled()))
+            it.check(matches(isCompletelyDisplayed()))
         }
+        Thread.sleep(TIME)
+    }
 
-        private val errorResponse by lazy { MockResponse().setResponseCode(404) }
+    @Test
+    fun shouldReturnListContactsNotIsEmpty() {
+        onView(withText(context?.resources?.getString(R.string.title))).check(
+            matches(
+                isCompletelyDisplayed()
+            )
+        )
+        onView(withId(R.id.user_list_recycler)).check(matches(isEnabled()))
+        Thread.sleep(TIME)
+        onView(withId(R.id.user_list_recycler))
+            .check(matches(RecyclerViewMatchers.notIsEmpty()))
     }
 }

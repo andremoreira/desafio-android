@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.helper.hideView
+import com.picpay.desafio.android.helper.loadImage
 import com.picpay.desafio.android.helper.showView
 import com.picpay.desafio.android.network.users.models.User
 import com.squareup.picasso.Callback
@@ -19,18 +20,6 @@ class UserItemViewHolder(
         itemView.progressBar.showView()
         itemView.name.text = user.name ?: ""
         itemView.username.text = user.username ?: ""
-        Picasso.get()
-            .load(user.img ?: "")
-            .error(R.drawable.ic_round_account_circle)
-            .into(itemView.picture, object : Callback {
-
-                override fun onSuccess() {
-                    itemView.progressBar.hideView()
-                }
-
-                override fun onError(e: Exception?) {
-                    itemView.progressBar.hideView()
-                }
-            })
+        itemView.picture.loadImage(user.img, itemView.progressBar)
     }
 }

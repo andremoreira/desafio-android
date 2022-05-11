@@ -26,14 +26,15 @@ object RecyclerViewMatchers {
         }
     }
 
-    fun checkRecyclerViewItem(resId: Int, position: Int, withMatcher: Matcher<View>) {
-        Espresso.onView(ViewMatchers.withId(resId)).check(
-            ViewAssertions.matches(
-                atPosition(
-                    position,
-                    ViewMatchers.hasDescendant(withMatcher)
-                )
-            )
-        )
+    fun notIsEmpty(): Matcher<View> {
+        return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+            override fun describeTo(description: Description?) {
+                description?.appendText("RecyclerView Not Is Empty")
+            }
+
+            override fun matchesSafely(item: RecyclerView?): Boolean {
+                return item?.adapter?.itemCount!! > 0
+            }
+        }
     }
 }
