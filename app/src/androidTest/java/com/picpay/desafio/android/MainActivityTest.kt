@@ -9,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.picpay.desafio.android.RecyclerViewMatchers.isEmpty
-//import com.picpay.desafio.android.RecyclerViewMatchers.isEmpty
 import com.picpay.desafio.android.ui.MainActivity
 import org.junit.Before
 import org.junit.Rule
