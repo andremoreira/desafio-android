@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObservers() {
         userViewModel.listUser.listen(this, ::sucessUser)
-        userViewModel.errorUser.listen(this, ::errorUser)
+        userViewModel.errorUser.listen(this) { errorUser() }
         user_list_progress_bar.showView()
     }
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         user_list_progress_bar.hideView()
     }
 
-    private fun errorUser(error: String) {
+    private fun errorUser() {
         snackBar(getString(R.string.message_erro), true)
     }
 

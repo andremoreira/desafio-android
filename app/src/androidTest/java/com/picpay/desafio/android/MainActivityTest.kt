@@ -8,6 +8,8 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
+import com.picpay.desafio.android.RecyclerViewMatchers.isEmpty
+//import com.picpay.desafio.android.RecyclerViewMatchers.isEmpty
 import com.picpay.desafio.android.ui.MainActivity
 import org.junit.Before
 import org.junit.Rule
@@ -47,6 +49,20 @@ class MainActivityTest {
             it.check(matches(isCompletelyDisplayed()))
         }
         Thread.sleep(TIME)
+    }
+
+    @Test
+    fun shouldReturnListContactsIsEmpty() {
+        onView(withText(context?.resources?.getString(R.string.title))).check(
+            matches(
+                isCompletelyDisplayed()
+            )
+        )
+        onView(withId(R.id.user_list_recycler)).check(matches(isEnabled()))
+        Thread.sleep(TIME)
+
+        onView(withId(R.id.user_list_recycler))
+            .check(matches(isEmpty()))
     }
 
     @Test

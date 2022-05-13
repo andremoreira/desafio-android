@@ -3,12 +3,14 @@ package com.picpay.desafio.android
 import com.picpay.desafio.android.network.users.IRepositoryUser
 import com.picpay.desafio.android.network.users.models.User
 import com.picpay.desafio.android.ui.UserViewModel
+import com.picpay.desafio.android.utis.CustomResult
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Test
@@ -24,12 +26,12 @@ class UserViewModelTest {
 
     @MockK
     private lateinit var viewModel: UserViewModel
-    private val mainThreadSurrogate = TestCoroutineDispatcher()
+    private val testCoroutineDispatcher = TestCoroutineDispatcher()
 
     @Before
     fun init() {
         MockKAnnotations.init(this, relaxUnitFun = true)
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testCoroutineDispatcher)
         viewModel = UserViewModel(repository)
     }
 
@@ -40,11 +42,24 @@ class UserViewModelTest {
     )
 
     @Test
-    fun `Given list users WHEN fun getUsers is called THEN return list`() {
-        val responseList = addItemList()
-        coEvery {
-            repository.getUsers()
+    fun `validates call to getUsers when successful()`() {
+        val response = addItemList()
+        testCoroutineDispatcher.runBlockingTest {
+            coEvery { repository.getUsers() } returns CustomResult.CustomResultSuccess(
+                response
+            )
         }
-        assertEquals(addItemList(), responseList)
+        assertEquals(response, addItemList())
+    }
+
+    @Test
+    fun `validates call to getUsers when error()`() {
+        testCoroutineDispatcher.runBlockingTest {
+            coEvery { repository.getUsers() } returns CustomResult.CustomResultError(
+                "Houve um Erro !"
+            )
+        }
+        val error = mutableListOf<CustomResult.CustomResultError>()
+        assertEquals(error, error)
     }
 }
