@@ -36,7 +36,7 @@ class UserViewModelTest {
     private fun addItemList() = listOf(
         User("ABC", "ABC", 1, "ABC"),
         User("DEF", "DEF", 2, "DEF"),
-        User("GHI", "GHI", 2, "GHI")
+        User("GHI", "GHI", 3, "GHI")
     )
 
     @Test
